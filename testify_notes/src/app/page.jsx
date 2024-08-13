@@ -5,6 +5,6 @@ export default function Home() {
   return (
     <div>
       <FileUpload/>
-    </div>
+     </div>
   )
 }
