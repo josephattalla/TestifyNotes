@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseUrl = '/api/openai'
+const baseUrl = '/api/llm'
 
 const chat = message => {
     return axios.post(baseUrl, message)
