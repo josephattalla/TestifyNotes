@@ -12,6 +12,8 @@ const DisplayQuestion = ({ question }) => {
             return <OpenEndedQuestion question={question} />
         case 'multiple choice':
             return <MultipleChoiceQuestion question={question} />
+        case 'true or false':
+            return <MultipleChoiceQuestion question={question} />
         default:
             return null
     }

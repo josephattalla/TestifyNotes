@@ -9,7 +9,7 @@ const DisplayQuestionPdf = ({ question, index }) => {
     return (
         <div>
             {question.format === 'open ended' && <OpenEndedPdf question={question} index={index} />}
-            {question.format === 'multiple choice' || question.format === 'true or false' && <MultipleChoicePdf question={question} index={index} />}
+            {(question.format === 'multiple choice' || question.format === 'true or false') && <MultipleChoicePdf question={question} index={index} />}
         </div>
     )
 }
