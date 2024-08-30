@@ -16,13 +16,6 @@ const DownloadPdf = ({ questions }) => {
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
         pagebreak: { mode: ['avoid-all'] }
     }
-    const handleDownload = async () => {
-        const html2pdf = (await import('html2pdf.js')).default
-        const element = document.getElementById('exam-pdf-content')
-        if (!element) return
-        
-        html2pdf.from(element).set(options).save()
-    }
 
     const handleView = async () => {
         const html2pdf = (await import('html2pdf.js')).default
@@ -42,14 +35,8 @@ const DownloadPdf = ({ questions }) => {
             </div>
             <div className="flex space-x-4">
                 <button
-                    onClick={handleDownload}
-                    className="bg-primary hover:bg-primary-dark text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-colors"
-                >
-                    Download PDF
-                </button>
-                <button
                     onClick={handleView}
-                    className="bg-secondary hover:bg-secondary-dark text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-colors"
+                    className="bg-secondary hover:bg-primary text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-colors"
                 >
                     View PDF
                 </button>
