@@ -10,8 +10,9 @@ export async function POST(req) {
     // Validate Origin
     try {
         const headersList = headers();
-        const origin = headersList.get('origin');
-        if (origin !== 'http://localhost:3000' || origin !== process.env.VERCEL_URL) {
+        const origin = headersList.get('origin')
+		console.log(process.env.VERCEL_URL);
+        if (origin !== 'http://localhost:3000' || origin !== 'https://' + process.env.VERCEL_URL) {
             return Response.json({ error: "Invalid origin" }, { status: 403 });
         }
     } catch (error) {
