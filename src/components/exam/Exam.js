@@ -8,7 +8,7 @@ import DownloadPdf from '../pdf/DownloadPdf'
 
 const Exam = ({ exam }) => {
     console.log("Exam parameter: ", exam)
-    // const questions = exam ? exam : null
+    const questions = exam ? exam : null
     if (!questions) {
         return null
     }
