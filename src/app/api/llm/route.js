@@ -11,7 +11,7 @@ export async function POST(req) {
     try {
         const headersList = headers();
         const origin = headersList.get('origin');
-        if (origin !== 'http://localhost:3000' || origin !== 'https://testifynotes-josephattallas-projects.vercel.app') {
+        if (origin !== 'http://localhost:3000' || origin !== process.env.VERCEL_URL) {
             return Response.json({ error: "Invalid origin" }, { status: 403 });
         }
     } catch (error) {
