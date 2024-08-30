@@ -35,7 +35,6 @@ export default function FileUpload() {
 	const onFileUpload = async (event) => {
 		event.preventDefault()
 		setLoading(true)
-		let result = ''
 		if (!file) {
 			alert('Must upload file first.')
 			setLoading(false)

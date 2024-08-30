@@ -11,7 +11,7 @@ export async function POST(req) {
     try {
         const headersList = headers();
         const origin = headersList.get('origin')
-		console.log(process.env.VERCEL_URL);
+		console.log(process.env.VERCEL_URL + '\n' + origin);
         if (origin !== 'http://localhost:3000' || origin !== 'https://' + process.env.VERCEL_URL) {
             return Response.json({ error: "Invalid origin" }, { status: 403 });
         }
