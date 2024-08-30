@@ -12,8 +12,8 @@ export async function POST(req) {
         const headersList = headers();
         const origin = headersList.get('origin')
 		const vercelUrl = `https://${process.env.VERCEL_URL}`
-		console.log(vercelUrl + '\n' + origin);
-        if (origin !== 'http://localhost:3000' && origin !== 'https://' + process.env.VERCEL_URL) {
+		console.error(vercelUrl + '\n' + origin);
+        if (origin !== 'http://localhost:3000' && origin !== vercelUrl && origin != 'https://testifynotes-josephattallas-projects.vercel.app') {
             return Response.json({ error: "Invalid origin" }, { status: 403 });
         }
     } catch (error) {
@@ -58,7 +58,7 @@ export async function POST(req) {
     for (let chunk of chunks) {
         try {
             const response = await createCompletion(chunk);
-            console.log("RESPONSE: ", response.choices[0].message.content);
+            console.error("RESPONSE: ", response.choices[0].message.content);
             result.push(response.choices[0].message.content);
         } catch (error) {
             console.error("Error processing chunk:", error);
