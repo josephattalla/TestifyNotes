@@ -6,9 +6,7 @@ import { headers } from 'next/headers'
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
-export const config = {
-    maxDuration: 60,
-}
+export const maxDuration = 60
 
 export async function POST(req) {
 
