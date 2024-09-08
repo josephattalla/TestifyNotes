@@ -10,4 +10,13 @@
             focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 
             transition-opacity duration-200
     }
+    /* .bg {
+        @apply bg-gradient-to-tl from-zinc-950 via-zinc-900 to-zinc-800
+    } */
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }

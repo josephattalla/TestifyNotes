@@ -9,8 +9,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} overscroll-none`}>
+    <html lang="en" className="relative h-full w-full bg-slate-950">
+      <body className={`${inter.className} absolute left-0 top-0 -z-10 h-full w-full bg-[radial-gradient(circle_500px_at_50%_200px,#3e3e3e,transparent)]`}>
         {children}
       </body>
     </html>

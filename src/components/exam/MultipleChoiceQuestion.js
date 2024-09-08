@@ -6,27 +6,23 @@ import DisplayAnswer from './DisplayAnswer'
 const MultipleChoiceQuestion = ({ question }) => {
     const [submitState, setSubmitState] = useState(false)
     const [selectedOption, setSelectedOption] = useState(null)
-    const [isCorrect, setIsCorrect] = useState(null)
     const [correctEmoji, setCorrectEmoji] = useState(null)
 
-    // Reset submitState when the question changes
+    // Reset when question changes
     useEffect(() => {
         setSubmitState(false)
         setSelectedOption(null)
-        setIsCorrect(null)
+        setCorrectEmoji(null)
     }, [question])
 
     const handleSubmit = (event) => {
         setSubmitState(!submitState)
 
         if (submitState) {
-            setIsCorrect(null)
             setCorrectEmoji(null)
-        }
-        else {
-            const correct = selectedOption === question.answer
-            setIsCorrect(correct)
-            setCorrectEmoji(correct ? '✅' : '❌')
+            setSelectedOption(null)
+        } else {
+            setCorrectEmoji(selectedOption === question.answer ? '✅' : '❌')
         }
     }
 
@@ -44,6 +40,8 @@ const MultipleChoiceQuestion = ({ question }) => {
                             id={`choice-${index}`}
                             name={question.question}
                             value={choice}
+                            disabled={submitState && selectedOption !== choice}
+                            checked = {selectedOption === choice}
                             onChange={(e) => setSelectedOption(e.target.value)}
                             className="h-4 w-4 text-primary bg-zinc-700 border-gray-600 focus:ring-primary"
                         />

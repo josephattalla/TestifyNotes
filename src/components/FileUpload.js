@@ -46,7 +46,7 @@ export default function FileUpload() {
 				output = await pdfToText(file)	
 			} catch (error) {
 				setLoading(false)
-				alert('Error extracting text from PDF.')
+				alert('Error extracting text from PDF. Try adding a text layer to the pdf using OCR.')
 			}
 
 			// RESET FILE INPUT
@@ -60,7 +60,7 @@ export default function FileUpload() {
 			// CHECK IF TEXT WAS EXTRACTED
 			if (!output || output === '') {
 				setLoading(false)
-				alert('Error extracting text from PDF.')
+				alert('Error extracting text from PDF. Try adding a text layer to the pdf using OCR.')
 				return
 			}
 
@@ -77,7 +77,7 @@ export default function FileUpload() {
 				.catch(error => {
 					console.log(error)
 					setLoading(false)
-					alert('Error processing file.')
+					alert('Error processing file. Due to this being on a demo on a small server, pdfs with lots of text will timeout, try using a file with less text.')
 				})
 		}
 	}
