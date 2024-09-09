@@ -1,12 +1,8 @@
-import Groq from 'groq-sdk'
-import { systemMessage } from '@/utils/systemMessage'
-import { jsonSchema } from '@/utils/jsonSchema'
 import chunkText from '@/utils/chunkText'
 import { headers } from 'next/headers'
+import createCompletion from './createCompletion'
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
-
-export const maxDuration = 60
+export const maxDuration = 60   // set max duration of request 
 
 export async function POST(req) {
 
@@ -34,38 +30,19 @@ export async function POST(req) {
     }
 
     let result = []
-    // Function to Handle API Call
-    const createCompletion = async (content) => {
-        return await groq.chat.completions.create({
-            messages: [
-                {
-                    role: "system",
-                    content: `${systemMessage}\n The JSON object must use the schema: ${jsonSchema}`,
-                },
-                {
-                    role: "user",
-                    content: `the lecture notes: ${content}`,
-                },
-            ],
-            model: "llama3-8b-8192",
-            temperature: 0.1,
-            stream: false,
-            response_format: { type: "json_object" },
-        })
-    }
 
     // Process Chunks if Needed
     const chunks = data.prompt.length > 15000 ? chunkText(data.prompt, 10000) : [data.prompt]
 
-    for (let chunk of chunks) {
-        try {
+    try {
+        await Promise.all(chunks.map(async (chunk) => {
             const response = await createCompletion(chunk)
             console.info("RESPONSE: ", response.choices[0].message.content)
             result.push(response.choices[0].message.content)
-        } catch (error) {
-            console.error("Error processing chunk:", error)
-            return Response.json({ error: "Error processing chunk" }, { status: 500 })
-        }
+        }))
+    } catch (error) {
+        console.error("Error processing chunks:", error)
+        return Response.json({ error: "Error processing chunks" }, { status: 500 })
     }
 
     // Parse Results
