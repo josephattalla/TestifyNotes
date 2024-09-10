@@ -77,7 +77,7 @@ export default function FileUpload() {
 				.catch(error => {
 					console.log(error)
 					setLoading(false)
-					alert('Error processing file. Due to this being on a demo on a small server, pdfs with lots of text will timeout, try using a file with less text.')
+					alert('Error processing file. If your PDF is taking longer than 60 seconds to process, try breaking it up into multiple PDFS.')
 				})
 		}
 	}
@@ -90,13 +90,14 @@ export default function FileUpload() {
 					<div className="flex flex-col place-items-center space-y-4 bg-zinc-800 p-6 rounded-lg shadow-lg">
 						<form onSubmit={onFileUpload} className='w-full flex flex-col place-items-center space-y-4'>
 							<input type='file' 
+								
 								accept='.pdf' 
 								onChange={onFileInput} 
 								id='fileInput' 
 								disabled={loading}
 								className="w-full text-sm text-gray-400 file:button file:border-0 file:disabled:opacity-50 file:disabled:cursor-not-allowed"
 							/>
-							<p className="text-xs italic text-gray-500">Max file size: 50MB</p>
+							<p className="text-xs italic text-gray-500">{'<'}50MB .PDF</p>
 							<button 
 								type='submit' 
 								className='button disabled:opacity-50 disabled:cursor-not-allowed' 
@@ -105,7 +106,7 @@ export default function FileUpload() {
 								{loading ? 'Processing...' : 'Submit'}
 							</button>
 							<p className="text-xs italic text-center text-gray-500">
-								Note: if not working try adding a text layer to the pdf using{' '}
+								If not working try adding a text layer to the pdf using{' '}
 								<a href="https://smallpdf.com/pdf-ocr" className="text-primary hover:text-secondary font-semibold underline underline-offset-4 transition-colors" target="_blank" rel="noopener noreferrer">
 									OCR
 								</a> 
