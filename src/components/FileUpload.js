@@ -77,7 +77,15 @@ export default function FileUpload() {
 				.catch(error => {
 					console.log(error)
 					setLoading(false)
-					alert('Error processing file. If your PDF is taking longer than 60 seconds to process, try breaking it up into multiple PDFS.')
+					if (error.status === 429) {
+						alert('Rate limit exceeded. Please try again later.')
+					}
+					else if (error.status === 500) {
+						alert('Network error. Please try again.')
+					}
+					else {
+						alert('Error processing file. If your PDF is taking longer than 60 seconds to process, try breaking it up into multiple PDFS.')
+					}
 				})
 		}
 	}
@@ -97,7 +105,7 @@ export default function FileUpload() {
 								disabled={loading}
 								className="w-full text-sm text-gray-400 file:button file:border-0 file:disabled:opacity-50 file:disabled:cursor-not-allowed"
 							/>
-							<p className="text-xs italic text-gray-500">{'<'}50MB .PDF</p>
+							<p className="text-xs italic text-gray-500"> accepts {maxMb}mb .pdf </p>
 							<button 
 								type='submit' 
 								className='button disabled:opacity-50 disabled:cursor-not-allowed' 

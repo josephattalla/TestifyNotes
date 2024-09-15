@@ -17,7 +17,7 @@ const createCompletion = async (content) => {
                 content: `the lecture notes: ${content}`,
             },
         ],
-        model: "llama3-8b-8192",
+        model: "llama-3.1-8b-instant",
         temperature: 0.1,
         stream: false,
         response_format: { type: "json_object" },
