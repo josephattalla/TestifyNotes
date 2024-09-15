@@ -77,10 +77,10 @@ export default function FileUpload() {
 				.catch(error => {
 					console.log(error)
 					setLoading(false)
-					if (error.status === 429) {
+					if (error.response.status === 429) {
 						alert('Rate limit exceeded. Please try again later.')
 					}
-					else if (error.status === 500) {
+					else if (error.response.status === 500) {
 						alert('Network error. Please try again.')
 					}
 					else {

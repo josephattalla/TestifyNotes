@@ -33,6 +33,8 @@ export async function POST(req) {
     // Process Chunks if Needed
     const chunks = data.prompt.length > 15000 ? chunkText(data.prompt, 15000) : [data.prompt]
 
+    let rateLimit = false
+
     await Promise.all(chunks.map(async (chunk) => {
         try {
             const response = await createCompletion(chunk)
@@ -41,10 +43,14 @@ export async function POST(req) {
         } catch (error) {
             console.error("Error processing chunk:", error)
             if (error.status === 429) {
-                return Response.json({ error: "Rate limit exceeded" }, { status: 429 })
+                rateLimit = true
             }
         }
     }))
+
+    if (rateLimit) {
+        return Response.json({ error: "Rate limit exceeded" }, { status: 429 })
+    }
 
     // Parse Results
     let parsedResults = []
@@ -63,6 +69,6 @@ export async function POST(req) {
         return Response.json({ error: "Error parsing question results" }, { status: 500 })
     }
 
+
     return Response.json(parsedResults)
 }
-
