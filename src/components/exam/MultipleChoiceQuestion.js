@@ -1,3 +1,5 @@
+// MULTIPLE CHIOCE QUESTION DISPLAY FOR PDF
+
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -8,13 +10,14 @@ const MultipleChoiceQuestion = ({ question }) => {
     const [selectedOption, setSelectedOption] = useState(null)
     const [correctEmoji, setCorrectEmoji] = useState(null)
 
-    // Reset when question changes
+    // RESET WHEN NEW EXAM MADE AKA WHEN QUESTION CHANGES
     useEffect(() => {
         setSubmitState(false)
         setSelectedOption(null)
         setCorrectEmoji(null)
     }, [question])
 
+    // ON SUBMIT, CHECK IF ANSWER IS CORRECT, THEN DISPLAY CORRECT/INCORRECT EMOJI
     const handleSubmit = (event) => {
         setSubmitState(!submitState)
 

@@ -1,3 +1,5 @@
+// OPEN ENDED QUESTION COMPONENT
+
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -6,7 +8,7 @@ import DisplayAnswer from './DisplayAnswer'
 const OpenEndedQuestion = ({ question }) => {
     const [submitState, setSubmitState] = useState(false)
 
-    // Reset submitState when the question changes
+    // RESET SUBMITSTATE FOR WHEN NEW EXAM MADE, AKA WHEN QUESTION CHANGES
     useEffect(() => {
         setSubmitState(false)
     }, [question])

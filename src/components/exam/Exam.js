@@ -2,14 +2,12 @@
 
 'use client'
 
-import questions from '@/app/data/questions'
 import DisplayQuestion from './DisplayQuestion'
 import DownloadPdf from '../pdf/DownloadPdf'
 
 const Exam = ({ exam }) => {
     console.log("Exam parameter: ", exam)
-    const questions = exam ? exam : null
-    if (!questions) {
+    if (!exam) {
         return null
     }
     return (
@@ -17,9 +15,9 @@ const Exam = ({ exam }) => {
             <h1 className='text-white text-4xl lg:text-6xl font-bold text-center mb-6'>
                 Exam
             </h1>
-            <DownloadPdf questions={questions} />
+            <DownloadPdf exam={exam} />
             <div className="space-y-4">
-                {questions.map((question, index) => (
+                {exam.map((question, index) => (
                     <DisplayQuestion key={index} question={question} />
                 ))}
             </div>

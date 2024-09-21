@@ -1,13 +1,16 @@
+// FILE UPLOAD AND EXTRACT TEXT FROM PDF
+
 'use client'
 
 import { useState } from 'react'
 import pdfToText from "react-pdftotext"
-import llmService from '@/app/services/llm'
+import llmService from '@/services/llm'
 import Exam from './exam/Exam'
 
 export default function FileUpload() {
 
 	const maxMb = 50
+	const maxChars = (20000 * 4) / 10
 	const MAX_FILE_SIZE = maxMb * 1024 * 1024	// 50mb
 
 	const [file, setFile] = useState(null)  
@@ -32,62 +35,69 @@ export default function FileUpload() {
 		setFile(selectedFile ? selectedFile : null)
 	}
 
+	// CREATE EXAM
 	const onFileUpload = async (event) => {
 		event.preventDefault()
 		setLoading(true)
 		if (!file) {
 			alert('Must upload file first.')
 			setLoading(false)
+			return
 		}
-		else {
-			// EXTRACT TEXT FROM UPLOADED FILE
-			let output = ''
-			try {
-				output = await pdfToText(file)	
-			} catch (error) {
-				setLoading(false)
-				alert('Error extracting text from PDF. Try adding a text layer to the pdf using OCR.')
-			}
-
-			// RESET FILE INPUT
-			document.getElementById('fileInput').value = ''
-			setFile(null)
-			const message = {
-				prompt: output
-			}
-			console.log('PDF Text:', output)
-
-			// CHECK IF TEXT WAS EXTRACTED
-			if (!output || output === '') {
-				setLoading(false)
-				alert('Error extracting text from PDF. Try adding a text layer to the pdf using OCR.')
-				return
-			}
-
-			// REMOVE WHITESPACE TO MINIMIZE TOKENS
-			output = output.replace(/\s+/g, '')
-
-			// MAKE API REQUEST
-			llmService.chat(message)
-				.then(res => {
-					console.log(res.data)
-					setExam(res.data)
-					setLoading(false)
-				})
-				.catch(error => {
-					console.log(error)
-					setLoading(false)
-					if (error.response.status === 429) {
-						alert('Rate limit exceeded. Please try again later.')
-					}
-					else if (error.response.status === 500) {
-						alert('Network error. Please try again.')
-					}
-					else {
-						alert('Error processing file. If your PDF is taking longer than 60 seconds to process, try breaking it up into multiple PDFS.')
-					}
-				})
+		// EXTRACT TEXT FROM UPLOADED FILE
+		let output = ''
+		try {
+			output = await pdfToText(file)	
+		} catch (error) {
+			setLoading(false)
+			alert('Error extracting text from PDF. Try adding a text layer to the pdf using OCR.')
+			return
 		}
+
+		// RESET FILE INPUT
+		document.getElementById('fileInput').value = ''
+		setFile(null)
+		const message = {
+			prompt: output
+		}
+		console.log('PDF Text:', output)
+
+		// CHECK IF TEXT WAS EXTRACTED
+		if (!output || output === '') {
+			setLoading(false)
+			alert('Error extracting text from PDF. Try adding a text layer to the pdf using OCR.')
+			return
+		}
+
+		// REMOVE WHITESPACE 
+		output = output.replace(/\s+/g, '')
+
+		if (output.length > maxChars){
+			alert(`Text exceeds ${maxChars} characters. Please upload a smaller PDF.`)
+			setLoading(false)
+			return
+		}
+
+		// MAKE API REQUEST
+		llmService.chat(message)
+			.then(res => {
+				console.log(res.data)
+				setExam(res.data)
+				setLoading(false)
+			})
+			.catch(error => {
+				console.log(error)
+				setLoading(false)
+				if (error.response.status === 429) {
+					alert('Rate limit exceeded. Please try again later.')
+				}
+				else if (error.response.status === 500) {
+					alert('Network error. Please try again.')
+				}
+				else {
+					alert('Error processing file. If your PDF is taking longer than 60 seconds to process, try breaking it up into multiple PDFS.')
+				}
+			})
 	}
 
 
@@ -105,7 +115,7 @@ export default function FileUpload() {
 								disabled={loading}
 								className="w-full text-sm text-gray-400 file:button file:border-0 file:disabled:opacity-50 file:disabled:cursor-not-allowed"
 							/>
-							<p className="text-xs italic text-gray-500"> accepts {maxMb}mb .pdf </p>
+							<p className="text-xs italic text-gray-500 text-center"> accepts .pdf with max {maxChars} characters, 50mb </p>
 							<button 
 								type='submit' 
 								className='button disabled:opacity-50 disabled:cursor-not-allowed' 

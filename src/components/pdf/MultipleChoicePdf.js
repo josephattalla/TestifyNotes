@@ -1,9 +1,11 @@
+// MULTIPLE CJOICE QUESTION DISPLAY FOR PDF
+
 const MultipleChoicePdf = ({ question, index }) => {
     if (!question) {
         return null;
     }
 
-    // Function to convert index to letter (a, b, c, ...)
+    // GET LETTER FOR CHOICE
     const getLetter = (index) => String.fromCharCode(97 + index);
 
     return (

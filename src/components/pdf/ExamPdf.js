@@ -1,8 +1,8 @@
+// MAP QUESTION TO DISPLAY QUESTIONS & ANSWER KEY FOR PDF 
+
 import DisplayQuestionPdf from './DisplayQuestionPdf'
 
 const ExamPdf = ({ exam }) => {
-    // exam = questions
-
     if (!exam) {
         return null
     }

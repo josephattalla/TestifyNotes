@@ -1,4 +1,4 @@
-// OPEN ENDED DISPLAY FOR PDF
+// OPEN ENDED QUESTION DISPLAY FOR PDF
 
 const OpenEndedPdf = ({ question, index }) => {
     if (!question) {

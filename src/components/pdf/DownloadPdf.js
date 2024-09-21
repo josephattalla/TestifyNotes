@@ -1,12 +1,14 @@
+// PRACTIVE EXAM PDF DOWNLOAD BUTTON
+
 'use client'
 
 import { useState } from 'react'
 import ExamPdf from './ExamPdf'
 
-const DownloadPdf = ({ questions }) => {
+const DownloadPdf = ({ exam }) => {
     const [loading, setLoading] = useState(false)
 
-    if (!questions) {
+    if (!exam) {
         return null
     }
 
@@ -19,6 +21,7 @@ const DownloadPdf = ({ questions }) => {
         pagebreak: { mode: ['avoid-all'] }
     }
 
+    // GENERATE PDF & OPEN IN NEW TAB
     const handleView = async () => {
         setLoading(true)
         try {
@@ -32,10 +35,12 @@ const DownloadPdf = ({ questions }) => {
                 setLoading(false)
             }).catch(error => {
                 console.error('Error generating PDF:', error)
+                alert('Error generating PDF')
                 setLoading(false)
             })
         } catch (error) {
             console.error('Error importing html2pdf.js:', error)
+            alert('Error generating PDF')
             setLoading(false)
         }
     }
@@ -43,7 +48,7 @@ const DownloadPdf = ({ questions }) => {
     return (
         <div className="flex flex-col items-center space-y-4">
             <div style={{ display: 'none' }}>
-                <ExamPdf exam={questions} id="exam-pdf-content" />
+                <ExamPdf exam={exam} id="exam-pdf-content" />
             </div>
             <div className="flex space-x-4">
                 <button
