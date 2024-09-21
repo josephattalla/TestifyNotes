@@ -4,7 +4,7 @@
 
 import { useState } from 'react'
 import pdfToText from "react-pdftotext"
-import llmService from '../services/llm'
+import llmService from '@/services/llm'
 import Exam from './exam/Exam'
 
 export default function FileUpload() {
