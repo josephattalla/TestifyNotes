@@ -1,6 +1,10 @@
 
 # TestifyNotes
-TestifyNotes is a web application built with React.js, Next.js, and Tailwind CSS. It allows users to upload PDF lecture notes and generates a customized practice exam. A serverless API is utilized to generate the practice exam utilizing [Groq](https://groq.com/) API. Once the PDF is uploaded, it is sent to a LLM to create questions, these questions are displayed once returned and allows used to enter answers. Once a question is submitted, the correct answer and explanation is displayed. A downloadable version of the practice exam is available along with the answer key on the last page.
+TestifyNotes is a web application built with React.js, Next.js, and Tailwind CSS. It allows users to upload PDF lecture notes and generates a customized practice exam.
+
+The application uses a serverless API to interact with the Groq API, which processes the PDF to create exam questions via a large language model (LLM). Once the questions are generated, they are displayed in the user interface, allowing users to input their answers.
+
+Upon submitting each question, the correct answer along with an explanation is shown. Additionally, users can download the full practice exam, complete with an answer key provided on the last page.
 
 ## Usage
 1. Clone the repository
