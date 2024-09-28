@@ -24,4 +24,5 @@ npm run dev
 ## Demo
 A demo is deployed on Vercel: [https://testifynotes-josephattallas-projects.vercel.app/](https://testifynotes-josephattallas-projects.vercel.app/)
 
-https://github.com/user-attachments/assets/c35305ee-2bd3-4341-852e-7ed42cfe7db0
+https://github.com/user-attachments/assets/055ceffd-bdf9-4fac-a246-ba189d338835
+
